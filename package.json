@@ -1,0 +1,87 @@
+{
+  "name": "certificate-management-system",
+  "version": "1.0.0",
+  "description": "郑州分行持证上岗证书管理系统",
+  "main": "src/main/main.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "electron:dev": "concurrently \"vite\" \"wait-on http://localhost:17432 -t 60000 && electron .\"",
+    "electron:build": "vite build && electron-builder",
+    "electron:build:win": "vite build && electron-builder --win",
+    "electron:build:linux": "vite build && electron-builder --linux",
+    "electron:preview": "vite build && electron .",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "keywords": [
+    "electron",
+    "vue3",
+    "certificate-management"
+  ],
+  "author": {
+    "name": "郑州分行",
+    "email": "zhengzhou@bank.com"
+  },
+  "homepage": "https://github.com/zhengzhou-bank/certificate-management-system",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^12.8.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@element-plus/icons-vue": "^2.3.2",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "concurrently": "^9.2.1",
+    "electron": "^41.0.4",
+    "electron-builder": "^25.1.8",
+    "element-plus": "^2.13.6",
+    "vite": "^8.0.2",
+    "vue": "^3.5.31",
+    "wait-on": "^8.0.5"
+  },
+  "build": {
+    "appId": "com.zhengzhou.bank.certificate",
+    "productName": "持证上岗证书管理系统",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "src/main/**/*",
+      "node_modules/**/*"
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        {
+          "target": "portable",
+          "arch": ["x64"]
+        },
+        {
+          "target": "nsis",
+          "arch": ["x64"]
+        }
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "持证上岗证书管理系统"
+    },
+    "portable": {
+      "artifactName": "${productName}-${version}-Portable.exe"
+    },
+    "linux": {
+      "target": [
+        {
+          "target": "deb",
+          "arch": ["x64"]
+        }
+      ],
+      "category": "Office"
+    }
+  }
+}
